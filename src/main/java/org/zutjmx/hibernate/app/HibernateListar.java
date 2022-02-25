@@ -13,10 +13,14 @@ public class HibernateListar {
     public static void main(String[] args) {
         EntityManager entityManager = JpaUtil.getEntityManager();
         List<Cliente> clientes = entityManager.createQuery(selectJpa,Cliente.class).getResultList();
+        System.out.println(":: Listado de Clientes ::");
+        Long cuantos = clientes.stream().count();
         clientes.forEach(
                 cliente -> System.out.println(cliente.toString())
                 //System.out::println
         );
+        System.out.println("Total de registros: " + cuantos);
+        System.out.println(":: Fin de Listado ::");
         entityManager.close();
     }
 }

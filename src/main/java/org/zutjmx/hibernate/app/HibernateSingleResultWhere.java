@@ -5,10 +5,9 @@ import jakarta.persistence.Query;
 import org.zutjmx.hibernate.app.entity.Cliente;
 import org.zutjmx.hibernate.app.util.JpaUtil;
 
-import java.util.List;
 import java.util.Scanner;
 
-public class HibernateListarWhere {
+public class HibernateSingleResultWhere {
     private static final String selectJpa = "select c from Cliente c";
     private static final String clausulaWhere = " where c.formaPago = ?1";
 
@@ -19,8 +18,11 @@ public class HibernateListarWhere {
         System.out.println("Indique la forma de pago:");
         String formaDePago = scanner.next();
         query.setParameter(1,formaDePago);
-        List<Cliente> clientes = (List<Cliente>) query.getResultList();
-        clientes.forEach(System.out::println);
+        query.setMaxResults(1);
+        /*List<Cliente> clientes = (List<Cliente>) query.getResultList();
+        clientes.forEach(System.out::println);*/
+        Cliente cliente = (Cliente) query.getSingleResult();
+        System.out.println(cliente);
         entityManager.close();
     }
 

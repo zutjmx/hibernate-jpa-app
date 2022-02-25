@@ -24,8 +24,11 @@ public class HibernatePorId {
         Cliente cliente = (Cliente) query.getSingleResult();*/
 
         Cliente cliente = entityManager.find(Cliente.class,id);
-
         System.out.println(cliente);
+
+        Cliente cliente2daConsulta = entityManager.find(Cliente.class,id);
+        System.out.println(cliente2daConsulta);
+
         entityManager.close();
     }
 
