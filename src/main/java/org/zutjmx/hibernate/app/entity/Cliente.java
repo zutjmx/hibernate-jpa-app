@@ -2,6 +2,8 @@ package org.zutjmx.hibernate.app.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -14,6 +16,13 @@ public class Cliente {
 
     @Column(name = "forma_pago")
     private String formaPago;
+
+    @Embedded
+    private Auditoria auditoria = new Auditoria();
+
+    public Auditoria getAuditoria() {
+        return auditoria;
+    }
 
     public Cliente() {
     }
@@ -64,11 +73,17 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Datos::Cliente{" +
+
+        LocalDateTime creado = this.auditoria != null? auditoria.getCreadoEn() : null;
+        LocalDateTime editado = this.auditoria != null? auditoria.getEditadoEn() : null;
+
+        return "Datos :: Cliente{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", formaPago='" + formaPago + '\'' +
+                ", creadoEn='" + creado + '\'' +
+                ", editadoEn='" + editado + '\'' +
                 '}';
     }
 
